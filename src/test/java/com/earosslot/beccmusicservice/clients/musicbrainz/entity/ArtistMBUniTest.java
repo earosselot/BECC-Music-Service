@@ -92,7 +92,7 @@ class ArtistMBUniTest {
     }
 
     private ArtistMB artistWithWikidataRelationAndWikiId(String wikidataId) {
-        List<Relation> relations = relationsWith(createRelation(WIKIDATA_RELATION_TYPE, wikidataId), createRelation(GENERIC_REALATION_TYPE));
+        List<Relation> relations = relationsWith(createGenericRelation(WIKIDATA_RELATION_TYPE, wikidataId), createGenericRelation());
         return artistWithRelations(relations);
     }
 
@@ -101,7 +101,7 @@ class ArtistMBUniTest {
     }
 
     private ArtistMB artistWithoutWikidataRelation() {
-        List<Relation> relations = relationsWith(createRelation(GENERIC_REALATION_TYPE), createRelation(GENERIC_REALATION_TYPE));
+        List<Relation> relations = relationsWith(createGenericRelation(), createGenericRelation());
         return artistWithRelations(relations);
     }
 
@@ -120,11 +120,11 @@ class ArtistMBUniTest {
         return artistWithRelations(relations);
     }
 
-    private Relation createRelation(String relationType) {
-        return createRelation(relationType, "genericID");
+    private Relation createGenericRelation() {
+        return createGenericRelation(ArtistMBUniTest.GENERIC_REALATION_TYPE, "genericID");
     }
 
-    private Relation createRelation(String relationType, String wikidataID) {
+    private Relation createGenericRelation(String relationType, String wikidataID) {
         String url = "https://wikidata.link/Entity/"+ wikidataID;
         return new Relation(relationType, new Url(url));
     }

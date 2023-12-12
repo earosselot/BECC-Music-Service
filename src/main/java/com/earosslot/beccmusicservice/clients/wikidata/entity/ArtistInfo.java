@@ -7,10 +7,6 @@ public class ArtistInfo {
     public ArtistInfo() {
     }
 
-    public ArtistInfo(SiteLinksMap sitelinks) {
-        this.sitelinks = sitelinks;
-    }
-
     public void setSitelinks(SiteLinksMap sitelinks) {
         this.sitelinks = sitelinks;
     }

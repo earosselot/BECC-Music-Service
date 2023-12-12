@@ -25,7 +25,6 @@ public class MusicBrainzClient {
     private final String url;
     private final RestTemplate restTemplate;
     private final HttpEntity<Void> voidHttpEntity;
-    private final String userAgentHeader;
 
     @Autowired
     public MusicBrainzClient(@Value("${musify.client.music-brainz.artist-url}") String url,
@@ -33,7 +32,6 @@ public class MusicBrainzClient {
         restTemplate = new RestTemplateBuilder()
                 .errorHandler(new RestTemplateErrorHandler())
                 .build();
-        this.userAgentHeader = userAgentHeader;
         HttpHeaders headers = new HttpHeaders();
         headers.set("User-Agent", userAgentHeader);
         voidHttpEntity = new HttpEntity<>(headers);
@@ -45,7 +43,6 @@ public class MusicBrainzClient {
         this.url = url;
         this.restTemplate = restTemplate;
         voidHttpEntity = new HttpEntity<>(new HttpHeaders());
-        userAgentHeader = "MusicService (earosselot@gmail.com)";
     }
 
     @Cacheable("artist-mb")

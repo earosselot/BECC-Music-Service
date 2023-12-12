@@ -67,7 +67,4 @@ public class Album {
         this.imageUrl = albumImage;
     }
 
-    public boolean hasImageUrl() {
-        return imageUrl != null;
-    }
 }
