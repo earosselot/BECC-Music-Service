@@ -1,0 +1,29 @@
+
+server:
+  port: 8080
+  servlet:
+    context-path: /musify
+
+musify:
+  client:
+    music-brainz:
+      artist-url: http://musicbrainz.org/ws/2/artist/%s?fmt=json&inc=url-rels+release-groups
+      user-agent-header: MusicService (earosselot@gmail.com)
+    wikidata:
+      entity-data-url: https://www.wikidata.org/wiki/Special:EntityData/%s.json
+    wikipedia:
+      summary-url: https://en.wikipedia.org/api/rest_v1/page/summary/%s
+    cover-art-archive:
+      cover-url: http://coverartarchive.org/release-group/%s
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+server:
+  error:
+    include-stacktrace: never
+
+springdoc.swagger-ui.enabled: false
