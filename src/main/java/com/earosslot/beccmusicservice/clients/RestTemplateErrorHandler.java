@@ -19,7 +19,7 @@ public class RestTemplateErrorHandler implements ResponseErrorHandler {
 
     @Override
     public void handleError(ClientHttpResponse httpResponse) {
-        throw new ArtistNotFoundException(" Artist Not Found");
+        throw new ArtistNotFoundException("");
     }
 
 }

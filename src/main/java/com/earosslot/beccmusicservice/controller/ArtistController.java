@@ -21,10 +21,10 @@ import java.util.regex.Pattern;
 @RequestMapping("/music-artist")
 public class ArtistController implements ArtistControllerInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ArtistController.class);
     public static final String MBID_FORMAT_NOT_VALID_ERROR_MSG = "MBID Format not Valid";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ArtistController.class);
 
-    static final Pattern UUID_REGEX = Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+    private static final Pattern UUID_REGEX = Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
 
     private final ArtistAggregator artistAggregator;
 

@@ -63,7 +63,7 @@ public class MusicBrainzClient {
 
         } catch (Exception exception) {
             LOGGER.error("Error {} getting Artist info from Music Brainz {} \n {}", exception.getClass().getName(), exception.getMessage(), exception.getStackTrace(), exception);
-            throw new ArtistNotFoundException("Artist Not Found");
+            throw new ArtistNotFoundException("Artist Not Found. MBID: " + mbid);
         }
     }
 }
