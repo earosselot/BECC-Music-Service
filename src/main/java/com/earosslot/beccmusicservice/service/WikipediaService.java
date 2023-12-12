@@ -34,7 +34,7 @@ public class WikipediaService {
 
             LOGGER.debug("Wikipedia END");
         } catch (Exception e) {
-            LOGGER.debug("Description not found");
+            LOGGER.error("Description not found for artist : " + artist);
         }
 
     }

@@ -20,7 +20,8 @@ public class ArtistAggregator {
     private final MusicBrainzService musicBrainz;
     private final WikipediaService wikipediaService;
     private final CoverArtArchiveService coverArtArchiveService;
-    private final Executor executor;
+    private final Executor wikipediaExecutor;
+    private final Executor albumExecutor;
 
     @Autowired
     ArtistAggregator(MusicBrainzService musicBrainz,
@@ -29,7 +30,8 @@ public class ArtistAggregator {
         this.musicBrainz = musicBrainz;
         this.wikipediaService = wikipediaService;
         this.coverArtArchiveService = coverArtArchiveService;
-        executor = Executors.newFixedThreadPool(15);
+        wikipediaExecutor = Executors.newCachedThreadPool();
+        albumExecutor = Executors.newCachedThreadPool();
     }
 
     public Artist getArtist(String mbid) {
@@ -47,7 +49,7 @@ public class ArtistAggregator {
     private CompletableFuture<Void> fillDescriptionAsync(Artist artist) {
         return CompletableFuture.runAsync(() ->
                 wikipediaService.fillDescription(artist)
-        , executor);
+        , wikipediaExecutor);
     }
 
     private Stream<CompletableFuture<Void>> fillImagesAsync(Artist artist) {
@@ -55,7 +57,7 @@ public class ArtistAggregator {
                 .parallel()
                 .map(album -> CompletableFuture.runAsync(
                         () -> coverArtArchiveService.fillImageLink(album)
-                , executor));
+                , albumExecutor));
     }
 
     private static void waitForCompletion(CompletableFuture<Void> future, Stream<CompletableFuture<Void>> futureStream) {
@@ -67,7 +69,7 @@ public class ArtistAggregator {
         try {
             voidFuture.get();
         } catch (InterruptedException | ExecutionException e) {
-            LOGGER.debug("Unable to complete future: ", e);
+            LOGGER.error("Unable to complete future: ", e);
         }
     }
 }

@@ -51,7 +51,7 @@ public class ArtistMB {
                     relation -> relation.getType().equals(relationType)
             ).collect(Collectors.toList());
         } catch (Exception e) {
-            LOGGER.debug("Failed to keep relation " + relationType);
+            LOGGER.error("Failed to keep relation " + relationType, e);
         }
     }
 

@@ -25,7 +25,7 @@ public class CoverArtArchiveService {
             album.setImageUrl(albumImage);
             LOGGER.trace("album " + album.getId() + "completed with cover link: " + album.getImageUrl());
         } catch (Exception e) {
-            LOGGER.debug("album " + album.getId() + " cover not found.");
+            LOGGER.error("album " + album.getId() + " cover not found.", e);
         }
     }
 }

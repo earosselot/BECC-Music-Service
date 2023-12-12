@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Duration;
+
 @Service
 public class MusicBrainzClient {
 
@@ -28,9 +30,12 @@ public class MusicBrainzClient {
 
     @Autowired
     public MusicBrainzClient(@Value("${musify.client.music-brainz.artist-url}") String url,
-                             @Value("${musify.client.music-brainz.user-agent-header}")String userAgentHeader) {
+                             @Value("${musify.client.music-brainz.user-agent-header}") String userAgentHeader) {
+
         restTemplate = new RestTemplateBuilder()
                 .errorHandler(new RestTemplateErrorHandler())
+                .setConnectTimeout(Duration.ofSeconds(2))
+                .setReadTimeout(Duration.ofSeconds(2))
                 .build();
         HttpHeaders headers = new HttpHeaders();
         headers.set("User-Agent", userAgentHeader);
@@ -56,11 +61,8 @@ public class MusicBrainzClient {
             artistMB.keepRelation("wikidata");
             return artistMB;
 
-        } catch (RestClientException exception) {
-            LOGGER.debug("Error {} getting Artist info from Music Brainz {} \n {}", exception.getClass().getName(), exception.getMessage(), exception.getStackTrace());
-            throw new ArtistNotFoundException("Artist Not Found");
         } catch (Exception exception) {
-            LOGGER.warn("Error {} getting Artist info from Music Brainz {} \n {}", exception.getClass().getName(), exception.getMessage(), exception.getStackTrace());
+            LOGGER.error("Error {} getting Artist info from Music Brainz {} \n {}", exception.getClass().getName(), exception.getMessage(), exception.getStackTrace(), exception);
             throw new ArtistNotFoundException("Artist Not Found");
         }
     }
