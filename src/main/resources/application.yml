@@ -9,12 +9,20 @@ musify:
     music-brainz:
       artist-url: http://musicbrainz.org/ws/2/artist/%s?fmt=json&inc=url-rels+release-groups
       user-agent-header: MusicService (earosselot@gmail.com)
+      connect-timeout-ms: 2000
+      read-timeout-ms: 2000
     wikidata:
       entity-data-url: https://www.wikidata.org/wiki/Special:EntityData/%s.json
+      connect-timeout-ms: 2000
+      read-timeout-ms: 2000
     wikipedia:
       summary-url: https://en.wikipedia.org/api/rest_v1/page/summary/%s
+      connect-timeout-ms: 2000
+      read-timeout-ms: 2000
     cover-art-archive:
       cover-url: http://coverartarchive.org/release-group/%s
+      connect-timeout-ms: 2000
+      read-timeout-ms: 2000
 
 ---
 spring:

@@ -6,7 +6,6 @@ import com.earosslot.beccmusicservice.exeptions.ArtistNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
@@ -29,23 +27,22 @@ public class MusicBrainzClient {
     private final HttpEntity<Void> voidHttpEntity;
 
     @Autowired
-    public MusicBrainzClient(@Value("${musify.client.music-brainz.artist-url}") String url,
-                             @Value("${musify.client.music-brainz.user-agent-header}") String userAgentHeader) {
+    public MusicBrainzClient(MusicBrainzConfig musicBrainzConfig) {
 
         restTemplate = new RestTemplateBuilder()
                 .errorHandler(new RestTemplateErrorHandler())
-                .setConnectTimeout(Duration.ofSeconds(2))
-                .setReadTimeout(Duration.ofSeconds(2))
+                .setConnectTimeout(Duration.ofMillis(musicBrainzConfig.getConnectTimeoutMs()))
+                .setReadTimeout(Duration.ofMillis(musicBrainzConfig.getReadTimeoutMs()))
                 .build();
         HttpHeaders headers = new HttpHeaders();
-        headers.set("User-Agent", userAgentHeader);
+        headers.set("User-Agent", musicBrainzConfig.getUserAgentHeader());
         voidHttpEntity = new HttpEntity<>(headers);
 
-        this.url = url;
+        this.url = musicBrainzConfig.getArtistUrl();
     }
 
-    public MusicBrainzClient(String url, RestTemplate restTemplate) {
-        this.url = url;
+    public MusicBrainzClient(RestTemplate restTemplate, MusicBrainzConfig musicBrainzConfig) {
+        this.url = musicBrainzConfig.getArtistUrl();
         this.restTemplate = restTemplate;
         voidHttpEntity = new HttpEntity<>(new HttpHeaders());
     }

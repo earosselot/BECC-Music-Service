@@ -12,14 +12,17 @@ public class RestTemplateErrorHandler implements ResponseErrorHandler {
 
     @Override
     public boolean hasError(ClientHttpResponse httpResponse) throws IOException {
-        return (
-          httpResponse.getStatusCode().is4xxClientError()
-          || httpResponse.getStatusCode().is5xxServerError());
+        return httpResponse.getStatusCode().isError();
     }
 
     @Override
-    public void handleError(ClientHttpResponse httpResponse) {
-        throw new ArtistNotFoundException("");
+    public void handleError(ClientHttpResponse httpResponse) throws IOException {
+        if (httpResponse.getStatusCode().is4xxClientError()) {
+            throw new ArtistNotFoundException("Client error getting artist information" + httpResponse.getBody());
+        } else if (httpResponse.getStatusCode().is5xxServerError()) {
+            throw new ArtistNotFoundException("Server error getting artist information" + httpResponse.getBody());
+        }
+        throw new ArtistNotFoundException("Unknown error getting artist information" + httpResponse.getBody());
     }
 
 }

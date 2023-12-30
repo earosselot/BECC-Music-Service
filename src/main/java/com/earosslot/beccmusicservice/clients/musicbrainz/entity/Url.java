@@ -1,20 +1,16 @@
 package com.earosslot.beccmusicservice.clients.musicbrainz.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Url {
 
     private String resource;
 
-    public Url() {}
-
-    public Url(String resource) {
-        this.resource = resource;
-    }
-
-    public String getResource() {
-        return resource;
-    }
-
-    public void setResource(String resource) {
-        this.resource = resource;
-    }
 }

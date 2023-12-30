@@ -1,13 +1,18 @@
 package com.earosslot.beccmusicservice.clients.musicbrainz.entity;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class ArtistMB {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ArtistMB.class);
@@ -27,18 +32,6 @@ public class ArtistMB {
     @JsonAlias("release-groups")
     private List<AlbumMB> releaseGroups;
 
-    public ArtistMB() {
-    }
-
-    public ArtistMB(String id, String name, String gender, String country, String disambiguation, List<Relation> relations, List<AlbumMB> releaseGroups) {
-        this.id = id;
-        this.name = name;
-        this.gender = gender;
-        this.country = country;
-        this.disambiguation = disambiguation;
-        this.relations = relations;
-        this.releaseGroups = releaseGroups;
-    }
 
     /**
      * From all the relations in the objets, delete all but the one having type == relationType.
@@ -106,84 +99,4 @@ public class ArtistMB {
         String[] urlSegments = wikidataUrl.split("/");
         return urlSegments[urlSegments.length - 1];
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ArtistMB artistMB = (ArtistMB) o;
-
-        if (!id.equals(artistMB.id)) return false;
-        if (!Objects.equals(name, artistMB.name)) return false;
-        if (!Objects.equals(gender, artistMB.gender)) return false;
-        if (!Objects.equals(country, artistMB.country)) return false;
-        if (!Objects.equals(disambiguation, artistMB.disambiguation))
-            return false;
-        if (!Objects.equals(relations, artistMB.relations)) return false;
-        return Objects.equals(releaseGroups, artistMB.releaseGroups);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getDisambiguation() {
-        return disambiguation;
-    }
-
-    public void setDisambiguation(String disambiguation) {
-        this.disambiguation = disambiguation;
-    }
-
-    public List<Relation> getRelations() {
-        return relations;
-    }
-
-    public void setRelations(List<Relation> relations) {
-        this.relations = relations;
-    }
-
-    public List<AlbumMB> getReleaseGroups() {
-        return releaseGroups;
-    }
-
-    public void setReleaseGroups(List<AlbumMB> releaseGroups) {
-        this.releaseGroups = releaseGroups;
-    }
-
-
 }

@@ -4,7 +4,6 @@ import com.earosslot.beccmusicservice.clients.coverartarchive.entity.AlbumCover;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
@@ -22,16 +21,16 @@ public class CoverArtArchiveClient {
     private final RestTemplate restTemplate;
 
     @Autowired
-    public CoverArtArchiveClient(@Value("${musify.client.cover-art-archive.cover-url}") String url) {
-        this.url = url;
+    public CoverArtArchiveClient(CoverArtArchiveConfig coverArtArchiveConfig) {
+        this.url = coverArtArchiveConfig.getCoverUrl();
         restTemplate = new RestTemplateBuilder()
-           .setConnectTimeout(Duration.ofSeconds(2))
-           .setReadTimeout(Duration.ofSeconds(2))
+           .setConnectTimeout(Duration.ofMillis(coverArtArchiveConfig.getConnectTimeoutMs()))
+           .setReadTimeout(Duration.ofMillis(coverArtArchiveConfig.getReadTimeoutMs()))
            .build();
     }
 
-    public CoverArtArchiveClient(String url, RestTemplate restTemplate) {
-        this.url = url;
+    public CoverArtArchiveClient(RestTemplate restTemplate, CoverArtArchiveConfig coverArtArchiveConfig) {
+        this.url = coverArtArchiveConfig.getCoverUrl();
         this.restTemplate = restTemplate;
     }
 

@@ -1,7 +1,6 @@
 package com.earosslot.beccmusicservice.clients.wikipedia;
 
 import com.earosslot.beccmusicservice.clients.wikipedia.entity.WikipediaResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +16,11 @@ public class WikipediaClient {
     private final RestTemplate restTemplate;
 
 
-    public WikipediaClient(@Value("${musify.client.wikipedia.summary-url}") String url) {
-        this.url = url;
+    public WikipediaClient(WikipediaConfig wikipediaConfig) {
+        this.url = wikipediaConfig.getSummaryUrl();
         restTemplate = new RestTemplateBuilder()
-                .setConnectTimeout(Duration.ofSeconds(2))
-                .setReadTimeout(Duration.ofSeconds(2))
+                .setConnectTimeout(Duration.ofMillis(wikipediaConfig.getConnectTimeoutMs()))
+                .setReadTimeout(Duration.ofMillis(wikipediaConfig.getReadTimeoutMs()))
                 .build();
     }
 

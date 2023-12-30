@@ -30,7 +30,9 @@ class MusicBrainzClientUniTest {
     @BeforeEach
     void setUp() {
         String url = "https://musicbrainz.com/artist%s";
-        musicBrainzClient = new MusicBrainzClient(url, restTemplate);
+        MusicBrainzConfig musicBrainzConfig = new MusicBrainzConfig();
+        musicBrainzConfig.setArtistUrl(url);
+        musicBrainzClient = new MusicBrainzClient(restTemplate, musicBrainzConfig);
     }
 
     @Test

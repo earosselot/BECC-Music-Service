@@ -1,5 +1,6 @@
 package com.earosslot.beccmusicservice.clients.coverartarchive.entity;
 
+import com.earosslot.beccmusicservice.exeptions.MusifyException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +30,7 @@ public class AlbumCoverUniTest {
     void test02() {
         AlbumCover albumCover = albumWithoutFrontCover();
 
-        RuntimeException albumNotFoundExc = assertThrows(RuntimeException.class, albumCover::getFrontImage);
+        RuntimeException albumNotFoundExc = assertThrows(MusifyException.class, albumCover::getFrontImage);
         assertEquals(AlbumCover.ALBUM_IMAGE_NOT_FOUND, albumNotFoundExc.getMessage());
     }
 
@@ -56,21 +57,21 @@ public class AlbumCoverUniTest {
     }
 
     public AlbumCover albumWithoutFrontCover() {
-        List<AlbumCover.Image> images = List.of(backImage(), backImage());
+        List<Image> images = List.of(backImage(), backImage());
         return new AlbumCover(images);
     }
 
     public AlbumCover albumWithFrontAndBackCover() {
-        List<AlbumCover.Image> images = List.of(frontImage(), backImage());
+        List<Image> images = List.of(frontImage(), backImage());
         return new AlbumCover(images);
     }
 
-    private static AlbumCover.Image backImage() {
-        return new AlbumCover.Image(List.of(BACK_COVER), LINK_TO_BACK);
+    private static Image backImage() {
+        return new Image(List.of(BACK_COVER), LINK_TO_BACK);
     }
 
-    private static AlbumCover.Image frontImage() {
-        return new AlbumCover.Image(List.of(AlbumCover.FRONT_COVER), LINK_TO_FRONT);
+    private static Image frontImage() {
+        return new Image(List.of(AlbumCover.FRONT_COVER), LINK_TO_FRONT);
     }
 
 }

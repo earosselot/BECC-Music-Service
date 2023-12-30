@@ -2,7 +2,6 @@ package com.earosslot.beccmusicservice.clients.wikidata;
 
 import com.earosslot.beccmusicservice.clients.wikidata.entity.ArtistInfo;
 import com.earosslot.beccmusicservice.clients.wikidata.entity.WikidataResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +16,12 @@ public class WikidataClient {
     private final String url;
     private final RestTemplate restTemplate;
 
-    public WikidataClient(@Value("${musify.client.wikidata.entity-data-url}") String url) {
+    public WikidataClient(WikidataConfig wikidataConfig) {
         restTemplate = new RestTemplateBuilder()
-                .setConnectTimeout(Duration.ofSeconds(2))
-                .setReadTimeout(Duration.ofSeconds(2))
+                .setConnectTimeout(Duration.ofMillis(wikidataConfig.getConnectTimeoutMs()))
+                .setReadTimeout(Duration.ofMillis(wikidataConfig.getReadTimeoutMs()))
                 .build();
-        this.url = url;
+        this.url = wikidataConfig.getEntityDataUrl();
     }
 
     @Cacheable("artist-wikidata")
