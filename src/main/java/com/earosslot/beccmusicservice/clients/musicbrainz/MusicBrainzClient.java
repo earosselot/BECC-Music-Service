@@ -1,6 +1,6 @@
 package com.earosslot.beccmusicservice.clients.musicbrainz;
 
-import com.earosslot.beccmusicservice.clients.RestTemplateErrorHandler;
+import com.earosslot.beccmusicservice.clients.MusicBrainzErrorHandler;
 import com.earosslot.beccmusicservice.clients.musicbrainz.entity.ArtistMB;
 import com.earosslot.beccmusicservice.exeptions.ArtistNotFoundException;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class MusicBrainzClient {
     public MusicBrainzClient(MusicBrainzConfig musicBrainzConfig) {
 
         restTemplate = new RestTemplateBuilder()
-                .errorHandler(new RestTemplateErrorHandler())
+                .errorHandler(new MusicBrainzErrorHandler())
                 .setConnectTimeout(Duration.ofMillis(musicBrainzConfig.getConnectTimeoutMs()))
                 .setReadTimeout(Duration.ofMillis(musicBrainzConfig.getReadTimeoutMs()))
                 .build();
