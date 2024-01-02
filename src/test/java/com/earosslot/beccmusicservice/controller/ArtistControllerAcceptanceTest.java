@@ -52,7 +52,7 @@ class ArtistControllerAcceptanceTest {
     }
 
     @Test
-    @DisplayName("Bad format Mbid returns 400 Bad Request")
+    @DisplayName("Nonexistent artist Mbid returns 400 Bad Request")
     void getInvalidMbid() throws Exception {
 
         String nobodyMbid = "f27ec8db-af05-4f36-916e-3d57f91ecf5f";

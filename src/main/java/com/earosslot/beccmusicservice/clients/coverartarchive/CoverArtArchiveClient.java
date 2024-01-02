@@ -24,9 +24,9 @@ public class CoverArtArchiveClient {
     public CoverArtArchiveClient(CoverArtArchiveConfig coverArtArchiveConfig) {
         this.url = coverArtArchiveConfig.getCoverUrl();
         restTemplate = new RestTemplateBuilder()
-           .setConnectTimeout(Duration.ofMillis(coverArtArchiveConfig.getConnectTimeoutMs()))
-           .setReadTimeout(Duration.ofMillis(coverArtArchiveConfig.getReadTimeoutMs()))
-           .build();
+                .setConnectTimeout(Duration.ofMillis(coverArtArchiveConfig.getConnectTimeoutMs()))
+                .setReadTimeout(Duration.ofMillis(coverArtArchiveConfig.getReadTimeoutMs()))
+                .build();
     }
 
     public CoverArtArchiveClient(RestTemplate restTemplate, CoverArtArchiveConfig coverArtArchiveConfig) {

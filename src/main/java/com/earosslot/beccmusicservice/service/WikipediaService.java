@@ -29,14 +29,17 @@ public class WikipediaService {
     public void fillDescription(Artist artist) {
 
         try {
-            String artistTitle = getArtistTitleFromWikidata(artist);
-            getAndFillDescriptionFromWikipedia(artist, artistTitle);
-
-            LOGGER.debug("Wikipedia END");
+            doFillDescription(artist);
         } catch (Exception e) {
             LOGGER.error("Description not found for artist : " + artist);
         }
+    }
 
+    private void doFillDescription(Artist artist) {
+        String artistTitle = getArtistTitleFromWikidata(artist);
+        getAndFillDescriptionFromWikipedia(artist, artistTitle);
+
+        LOGGER.debug("Wikipedia description obtained for artist " + artist.getName() + ". Mbid: " + artist.getMbid());
     }
 
     private String getArtistTitleFromWikidata(Artist artist) {

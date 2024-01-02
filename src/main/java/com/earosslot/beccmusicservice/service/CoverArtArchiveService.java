@@ -21,11 +21,15 @@ public class CoverArtArchiveService {
 
     public void fillImageLink(Album album) {
         try {
-            String albumImage = coverArtArchiveClient.getAlbumImage(album.getId());
-            album.setImageUrl(albumImage);
-            LOGGER.trace("album " + album.getId() + "completed with cover link: " + album.getImageUrl());
+            doFillImage(album);
         } catch (Exception e) {
             LOGGER.error("album " + album.getId() + " cover not found.", e);
         }
+    }
+
+    private void doFillImage(Album album) {
+        String albumImage = coverArtArchiveClient.getAlbumImage(album.getId());
+        album.setImageUrl(albumImage);
+        LOGGER.trace("album " + album.getId() + "completed with cover link: " + album.getImageUrl());
     }
 }

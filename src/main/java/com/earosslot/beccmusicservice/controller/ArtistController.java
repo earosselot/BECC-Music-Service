@@ -2,6 +2,7 @@ package com.earosslot.beccmusicservice.controller;
 
 import com.earosslot.beccmusicservice.entity.Artist;
 import com.earosslot.beccmusicservice.exeptions.ArtistNotFoundException;
+import com.earosslot.beccmusicservice.exeptions.MusifyException;
 import com.earosslot.beccmusicservice.service.ArtistAggregator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +44,13 @@ public class ArtistController implements ArtistControllerInterface {
             LOGGER.trace(artist.toString());
             return ResponseEntity.ok().body(artist);
 
+            // todo: pasar estos catchs a exception handlers
         } catch (ArtistNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage(), exception);
+        } catch (MusifyException exception) {
+            throw new ResponseStatusException(exception.getHttpStatus(), exception.getMessage(), exception);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), exception);
         }
     }
 
